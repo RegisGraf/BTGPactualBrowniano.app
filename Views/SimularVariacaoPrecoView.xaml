@@ -22,8 +22,6 @@
                              WidthRequest="220">
             <Label Text="Preço inicial(R$)"/>
 
-            <!--<Entry Keyboard="Numeric">
-            </Entry>-->
             <controls:CustomEntry Value="{Binding DadosBrowniano.StrPrecoInicial}"
                                   TipoEntry="Moeda"
                                   CasasDecimais="2"
