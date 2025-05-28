@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTGPactualBrowniano.app", "BTGPactualBrowniano.app.csproj", "{64539374-10C1-4B4A-B3B9-8148A01573E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64539374-10C1-4B4A-B3B9-8148A01573E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64539374-10C1-4B4A-B3B9-8148A01573E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64539374-10C1-4B4A-B3B9-8148A01573E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64539374-10C1-4B4A-B3B9-8148A01573E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEC56E21-477B-4A23-B815-F38DABCA7931}
+	EndGlobalSection
+EndGlobal

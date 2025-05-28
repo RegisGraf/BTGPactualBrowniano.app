@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BTGPactualBrowniano.app.Views.SimularVariacaoPrecoView"
+             xmlns:viewmodel="clr-namespace:BTGPactualBrowniano.app.ViewModels"
+             xmlns:controls="clr-namespace:BTGPactualBrowniano.app.Views.Custom"
+             Title="Simulação de preços">
+    <Grid Padding="15" 
+          ColumnDefinitions="*,Auto"
+          ColumnSpacing="5"
+          RowDefinitions="Auto, Auto, *"
+          Margin="0">
+        <GraphicsView x:Name="BrownianGraphicsView"
+                      Grid.Column="0"
+                      Grid.Row="0"
+                      BackgroundColor="LightGray"
+                      Drawable="{Binding BrownianDrawable}" />
+
+        <VerticalStackLayout Grid.Column="1"
+                             Grid.Row="0"
+                             Spacing="10"
+                             WidthRequest="220">
+            <Label Text="Preço inicial(R$)"/>
+
+            <!--<Entry Keyboard="Numeric">
+            </Entry>-->
+            <controls:CustomEntry Value="{Binding DadosBrowniano.StrPrecoInicial}"
+                                  TipoEntry="Moeda"
+                                  CasasDecimais="2"
+                                  AplicarValidacao="True"
+                                  x:Name="customEntry"/>
+
+            <Label Text="Volatilidade média(%)"/>
+
+            <Entry Keyboard="Numeric"
+                   Text="{Binding DadosBrowniano.Volatilidade}"/>
+
+            <Label Text="Retorno médio(%)"/>
+
+            <Entry Keyboard="Numeric"
+                   Text="{Binding DadosBrowniano.RetornoMedio}"
+                   MaxLength="100"/>
+
+            <Label Text="Número de dias(dias)"/>
+
+            <Entry Keyboard="Numeric"
+                   Text="{Binding DadosBrowniano.NumeroDias}"/>
+
+            <Label Text="Cor da simulação"/>
+
+            <HorizontalStackLayout Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="AbrirListaDeCoresTapped" NumberOfTapsRequired="1"/>
+                </HorizontalStackLayout.GestureRecognizers>
+                <Frame HeightRequest="50"
+                       WidthRequest="50"
+                       BackgroundColor="{Binding DadosBrowniano.CorDaLinha}"/>
+
+                <Label Text="▼"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <Button Text="Gerar nova simulação"
+                    Clicked="OnGenerateClicked"
+                    Margin="20"
+                    IsEnabled="{Binding IsValid, Source={x:Reference customEntry}}"/>
+        </VerticalStackLayout>
+
+        
+        <Label Text="Séries de simulação"
+                Grid.Row="1"
+               Padding="0, 10"/>
+
+        <CollectionView ItemsSource="{Binding ListaSeriesDadosBrowniano}"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,0,30">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical"/>
+        </CollectionView.ItemsLayout>
+            <CollectionView.Header>
+                <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                      BackgroundColor="LightGray">
+                    <Label Text="Série" Grid.Column="0"/>
+                    <Label Text="Preço inicial" Grid.Column="1"/>
+                    <Label Text="Volatilidade"  Grid.Column="2"/>
+                    <Label Text="Retorno médio" Grid.Column="3"/>
+                    <Label Text="Dias" Grid.Column="4"/>
+                    <Label Text="Cor" Grid.Column="5" HorizontalTextAlignment="Center"/>
+                    <Label Text="Ações" Grid.Column="6" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </CollectionView.Header>
+        <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                          RowDefinitions="*"
+                          Padding="1">
+                        <Label Text="{Binding Serie}"
+                                Grid.Column="0"
+                               VerticalTextAlignment="Center"/>
+
+                        <Label Text="{Binding PrecoInicial}"
+                                Grid.Column="1"
+                               VerticalTextAlignment="Center"/>
+
+                        <Label Text="{Binding Volatilidade}"
+                                Grid.Column="2"
+                               VerticalTextAlignment="Center"/>
+
+                        <Label Text="{Binding RetornoMedio}"
+                                Grid.Column="3"
+                               VerticalTextAlignment="Center"/>
+
+                        <Label Text="{Binding NumeroDias}"
+                                Grid.Column="4"
+                               VerticalTextAlignment="Center"/>
+
+                        <Frame HeightRequest="25"
+                               WidthRequest="25"
+                               CornerRadius="5"
+                               Grid.Column="5"
+                               HasShadow="False"
+                               BackgroundColor="{Binding CorDaLinha}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+
+                        <ImageButton Source="delete.png"
+                                     HeightRequest="20"
+                                     WidthRequest="20"
+                                     Clicked="removerSerieClicked"
+                                     ToolTipProperties.Text="Remover"
+                                     BindingContext="{Binding .}"
+                                     Grid.Column="6"
+                                     VerticalOptions="Center"
+                                     BackgroundColor="Transparent"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

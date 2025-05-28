@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popup:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:popup="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="BTGPactualBrowniano.app.Views.Custom.ColorPickerPopup"
+             Size="300, 150"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+    <Frame CornerRadius="15"
+           Padding="15"
+           BorderColor="Transparent"
+           BackgroundColor="White"
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+
+        <VerticalStackLayout Spacing="15">
+            <Label Text="Selecione uma cor"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+
+            <CollectionView ItemsSource="{Binding ListaCores}"
+                            SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                      ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0"
+                               CornerRadius="50"
+                               HeightRequest="40"
+                               WidthRequest="40"
+                               HasShadow="True">
+                            <BoxView Color="{Binding Cor}"
+                                     CornerRadius="50">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type popup:Popup}}, Path=BindingContext.ColorSelectedCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Frame>
+</popup:Popup>
