@@ -14,13 +14,12 @@ public partial class SimularVariacaoPrecoView : ContentPage
 {
     private readonly BrownianDrawable _drawable = new();
     SimularVariacaoPrecoViewModel _viewModel;
+    List<string> _listaDeCoresJaUsadas = new List<string>();
 
     public SimularVariacaoPrecoView(SimularVariacaoPrecoViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;
-        _viewModel.DadosBrowniano = new DadosBrowniano();
-        _viewModel.ListaSeriesDadosBrowniano = new ObservableCollection<DadosBrowniano>();
         BrownianGraphicsView.Drawable = _drawable;
         LoadDefaultSimulation();
 
@@ -42,12 +41,19 @@ public partial class SimularVariacaoPrecoView : ContentPage
         };
 
         _viewModel.ListaSeriesDadosBrowniano.Add(novaSerie);
+        AlimentaListaCoresJaUsadas(novaSerie.CorDaLinhaHexa);
 
         _drawable.CalcularBrownianoFinanceiro(novaSerie.NumeroDias, novaSerie.PrecoInicial, novaSerie.Volatilidade, novaSerie.RetornoMedio, novaSerie.CorDaLinhaHexa, novaSerie.Serie);
     }
 
-    private void OnGenerateClicked(object sender, EventArgs e)
+    private async void OnGenerateClicked(object sender, EventArgs e)
     {
+        if(_listaDeCoresJaUsadas.Contains(_viewModel.DadosBrowniano.CorDaLinhaHexa))
+        {
+            await DisplayAlert("Atenção!", "Esta cor já foi utilizada, por favor escolha outra cor!", "Ok");
+            return;
+        }
+
         DadosBrowniano novaSerie = new DadosBrowniano()
         {
             Serie = _viewModel.ListaSeriesDadosBrowniano.Count() == 0 ? 1 : _viewModel.ListaSeriesDadosBrowniano.LastOrDefault().Serie + 1,
@@ -60,8 +66,10 @@ public partial class SimularVariacaoPrecoView : ContentPage
             Volatilidade = _viewModel.DadosBrowniano.Volatilidade
         };
 
+        AlimentaListaCoresJaUsadas(novaSerie.CorDaLinhaHexa);
         _viewModel.ListaSeriesDadosBrowniano.Add(novaSerie);
         _drawable.CalcularBrownianoFinanceiro(novaSerie.NumeroDias, novaSerie.PrecoInicial, novaSerie.Volatilidade, novaSerie.RetornoMedio, novaSerie.CorDaLinhaHexa, novaSerie.Serie);
+
         BrownianGraphicsView.Invalidate();
     }
 
@@ -99,8 +107,10 @@ public partial class SimularVariacaoPrecoView : ContentPage
     {
         try
         {
-            var popup = new ColorPickerPopup(new ColorPickerViewModel(new Popup()));
+            //_listaDeCoresJaUsadas = _viewModel.ListaSeriesDadosBrowniano.Select(c => c.CorDaLinhaHexa).ToList();
 
+            var popup = new ColorPickerPopup(new ColorPickerViewModel(new Popup(), _listaDeCoresJaUsadas));
+            
             if (!WeakReferenceMessenger.Default.IsRegistered<ColorSelectedMessage>(this))
             {
                 WeakReferenceMessenger.Default.Register<ColorSelectedMessage>(this, (obj, m) =>
@@ -147,6 +157,7 @@ public partial class SimularVariacaoPrecoView : ContentPage
 
                 if (serie is not null)
                 {
+                    RemoveCorJaUsadaDaLista(serie.CorDaLinhaHexa);
                     _viewModel.ListaSeriesDadosBrowniano.Remove(serie);
                     _drawable.RemoverSerie(serie);
                     BrownianGraphicsView.Invalidate();   
@@ -156,5 +167,15 @@ public partial class SimularVariacaoPrecoView : ContentPage
         catch (Exception)
         {
         }
+    }
+
+    private void AlimentaListaCoresJaUsadas(string corUsada)
+    {
+        _listaDeCoresJaUsadas.Add(corUsada);
+    }
+
+    private void RemoveCorJaUsadaDaLista(string corLiberada)
+    {
+        _listaDeCoresJaUsadas.Remove(corLiberada);
     }
 }

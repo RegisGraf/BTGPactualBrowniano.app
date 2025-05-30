@@ -8,13 +8,11 @@ namespace BTGPactualBrowniano.app.Utils
         {
             string text = texto.Replace("R$", "").Replace(".", "").Replace(",", "").Trim();
 
-            if (!double.TryParse(text, out double value))
+            if (decimal.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal value))
             {
-                return string.Empty;
+                value /= 100;
+                text = value.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"));
             }
-
-            value /= 100.0; // Converte centavos para reais
-            text = value.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"));
 
             return text;
         }

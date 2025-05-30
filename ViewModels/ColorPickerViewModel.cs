@@ -25,7 +25,7 @@ namespace BTGPactualBrowniano.app.ViewModels
             }
         }
 
-        public ColorPickerViewModel(Popup popup)
+        public ColorPickerViewModel(Popup popup, List<string> coresJaUsadas)
         {
             _popup = popup;
 
@@ -53,6 +53,15 @@ namespace BTGPactualBrowniano.app.ViewModels
                 new Cores() { Cor = Colors.Coral, CorHexa = Colors.Coral.ToHex() },
                 new Cores() { Cor = Colors.DarkGreen, CorHexa = Colors.DarkGreen.ToHex() },
             };
+
+            coresJaUsadas.ForEach(corUsada =>
+            {
+                var itemParaRemover = ListaCores.FirstOrDefault(c => c.CorHexa.Equals(corUsada, StringComparison.OrdinalIgnoreCase));
+                if (itemParaRemover != null)
+                {
+                    ListaCores.Remove(itemParaRemover);
+                }
+            });
         }
     }
 }

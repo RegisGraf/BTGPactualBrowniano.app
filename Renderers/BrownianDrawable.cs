@@ -13,9 +13,9 @@ namespace BTGPactualBrowniano.app.Renderers
         private float _margin = 50;
         
         //Calcula os pontos de variação de preço
-        public void CalcularBrownianoFinanceiro(int numeroDias, double precoInicial, double volatilidade, double retornoMedio, string corDaLinhaHexa, int serie, bool atualizaAposExclusao = false)
+        public void CalcularBrownianoFinanceiro(int numeroDias, double precoInicial, double volatilidade, double retornoMedio, string corDaLinhaHexa, int serie)
         {
-            DadosBrowniano novaSerie = new DadosBrowniano()
+            var novaSerie = new DadosBrowniano()
             {
                 Points = new ObservableCollection<PointF>(),
                 CorDaLinhaHexa = corDaLinhaHexa,
@@ -116,7 +116,8 @@ namespace BTGPactualBrowniano.app.Renderers
             }
 
             // Linhas horizontais (preços)
-            float priceStep = (_maxPrice - _minPrice) / 10;
+            //float priceStep = (_maxPrice - _minPrice) / 10;
+            float priceStep = ((_maxPrice - _minPrice) / 10) > 0 ? ((_maxPrice - _minPrice) / 10) : 1;
             for (float price = _minPrice; price <= _maxPrice; price += priceStep)
             {
                 float y = dirtyRect.Height - _margin - (price - _minPrice) * _scaleY;
@@ -138,7 +139,7 @@ namespace BTGPactualBrowniano.app.Renderers
             }
 
             // Rótulos do eixo Y (preços)
-            float priceStep = (_maxPrice - _minPrice) / 10;
+            float priceStep = ((_maxPrice - _minPrice) / 10) > 0 ? ((_maxPrice - _minPrice) / 10) : 1;
             for (float price = _minPrice; price <= _maxPrice; price += priceStep)
             {
                 float y = dirtyRect.Height - _margin - (price - _minPrice) * _scaleY;

@@ -158,6 +158,10 @@ public partial class CustomEntry : ContentView
                 internalEntry.Keyboard = Keyboard.Default;
                 internalEntry.TextChanged += FormatDefault;
                 break;
+            case TiposEntry.Inteiro:
+                internalEntry.Keyboard = Keyboard.Numeric;
+                internalEntry.TextChanged += FormatInteiro;
+                break;
             default:
                 internalEntry.Keyboard = Keyboard.Default;
                 internalEntry.TextChanged += FormatDefault;
@@ -192,7 +196,7 @@ public partial class CustomEntry : ContentView
 
         if (double.TryParse(text, out double value))
         {
-            value /= (double)Math.Pow(10, CasasDecimais);
+            value /= Math.Pow(10, CasasDecimais);
 
             string formatString = $"N{CasasDecimais}";
 
@@ -211,19 +215,43 @@ public partial class CustomEntry : ContentView
 
     private void FormatCurrency(object sender, TextChangedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(e.NewTextValue)) return;
-
         var entry = (Entry)sender;
+
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            entry.Text = "R$ 0,00";
+            return;
+        }
 
         if (string.IsNullOrEmpty(entry?.Text))
             return;
 
         entry.Text = Formatadores.FormataMoedaReal(entry.Text);
-
+        
         // Move o cursor para o final
         CursorToEnd(entry);
 
         if (AplicarValidacao)
+            ValidateInput();
+    }
+
+    private void FormatInteiro(object sender, TextChangedEventArgs e)
+    {
+        var entry = (Entry)sender;
+
+        string text = CleanInput(e.NewTextValue);
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            entry.Text = "0";
+            return;
+        }
+
+        int result = int.Parse(text);
+        Value = result.ToString();
+        entry.Text = result.ToString();
+
+        if(AplicarValidacao)
             ValidateInput();
     }
 
@@ -289,7 +317,12 @@ public partial class CustomEntry : ContentView
             case TiposEntry.Moeda:
                 IsValid = double.Parse(CleanInput(Value)) > 0;
                 ExibeMensagemErro = !IsValid;
-                lblMensagem.Text = "Preço inicial deve ser maior que 0";
+                lblMensagem.Text = "O valor deve ser maior que 0";
+                break;
+            case TiposEntry.Inteiro:
+                IsValid = int.Parse(Value) > 0;
+                ExibeMensagemErro = !IsValid;
+                lblMensagem.Text = "O valor deve ser maior que 0";
                 break;
             default:
                 break;

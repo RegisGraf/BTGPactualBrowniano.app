@@ -26,36 +26,32 @@ namespace BTGPactualBrowniano.app.ViewModels
             {
                 listaSeriesBrowniano = value;
                 OnPropertyChanged("ListaSeriesDadosBrowniano");
+
+                if(listaSeriesBrowniano != null && listaSeriesBrowniano.Any())
+                {
+                    if (ListaCoresJaUsadas == null)
+                        ListaCoresJaUsadas = new ObservableCollection<string>();
+
+                    ListaCoresJaUsadas.Add(listaSeriesBrowniano?.LastOrDefault()?.CorDaLinhaHexa);
+                }
             }
         }
 
-        private ObservableCollection<Cores> listaCores;
-        public ObservableCollection<Cores> ListaCores
+        private ObservableCollection<string> listaCoresJaUsadas;
+        public ObservableCollection<string> ListaCoresJaUsadas
         {
-            get { return listaCores; }
+            get { return listaCoresJaUsadas; }
             set
             {
-                listaCores = value;
-                OnPropertyChanged("ListaCores");
+                listaCoresJaUsadas = value;
+                OnPropertyChanged("ListaCoresJaUsadas");
             }
         }
 
         public SimularVariacaoPrecoViewModel()
         {
-            listaCores = new ObservableCollection<Cores>()
-            {
-                new Cores() { Cor = Colors.Red, CorHexa = Colors.Red.ToHex() },
-                new Cores() { Cor = Colors.Blue, CorHexa = Colors.Blue.ToHex() },
-                new Cores() { Cor = Colors.Orange, CorHexa = Colors.Orange.ToHex() },
-                new Cores() { Cor = Colors.Black, CorHexa = Colors.Black.ToHex() },
-                new Cores() { Cor = Colors.Pink, CorHexa = Colors.Pink.ToHex() },
-                new Cores() { Cor = Colors.Purple, CorHexa = Colors.Purple.ToHex() },
-                new Cores() { Cor = Colors.Green, CorHexa = Colors.Green.ToHex() },
-                new Cores() { Cor = Colors.Brown, CorHexa = Colors.Brown.ToHex() },
-                new Cores() { Cor = Colors.Aqua, CorHexa = Colors.Aqua.ToHex() },
-                new Cores() { Cor = Colors.Coral, CorHexa = Colors.Coral.ToHex() },
-                new Cores() { Cor = Colors.DarkGreen, CorHexa = Colors.DarkGreen.ToHex() },
-            };
+            DadosBrowniano = new DadosBrowniano();
+            ListaSeriesDadosBrowniano = new ObservableCollection<DadosBrowniano>();
         }
 
     }

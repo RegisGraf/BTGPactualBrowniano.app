@@ -5,7 +5,7 @@ namespace BTGPactualBrowniano.app.Models
 {
     public class DadosBrowniano : ModelBase
     {
-        private double precoInicial = 100;
+        private double precoInicial = 100D;
         public double PrecoInicial
         {
             get { return precoInicial; }
@@ -16,7 +16,7 @@ namespace BTGPactualBrowniano.app.Models
             }
         }
 
-        private string strPrecoInicial = "1";
+        private string strPrecoInicial = "R$ 100,00";
         public string StrPrecoInicial
         {
             get { return strPrecoInicial; }

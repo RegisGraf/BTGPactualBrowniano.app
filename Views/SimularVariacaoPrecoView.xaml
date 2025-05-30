@@ -21,28 +21,37 @@
                              Spacing="10"
                              WidthRequest="220">
             <Label Text="Preço inicial(R$)"/>
-
+            
             <controls:CustomEntry Value="{Binding DadosBrowniano.StrPrecoInicial}"
                                   TipoEntry="Moeda"
                                   CasasDecimais="2"
                                   AplicarValidacao="True"
-                                  x:Name="customEntry"/>
+                                  x:Name="customEntryPreco"/>
 
             <Label Text="Volatilidade média(%)"/>
 
-            <Entry Keyboard="Numeric"
-                   Text="{Binding DadosBrowniano.Volatilidade}"/>
+            <!--<Entry Keyboard="Numeric"
+                   Text="{Binding DadosBrowniano.Volatilidade}"/>-->
+            <controls:CustomEntry Value="{Binding DadosBrowniano.Volatilidade}"
+                                  TipoEntry="Inteiro"
+                                  AplicarValidacao="True"
+                                  x:Name="customEntryVolatilidade"/>
 
             <Label Text="Retorno médio(%)"/>
 
-            <Entry Keyboard="Numeric"
-                   Text="{Binding DadosBrowniano.RetornoMedio}"
-                   MaxLength="100"/>
+            <!--<Entry Keyboard="Numeric"
+                   Text="{Binding DadosBrowniano.RetornoMedio}"/>-->
+            <controls:CustomEntry Value="{Binding DadosBrowniano.RetornoMedio}"
+                                  TipoEntry="Inteiro"
+                                  AplicarValidacao="True"
+                                  x:Name="customEntryRetornoMedio"/>
 
             <Label Text="Número de dias(dias)"/>
 
-            <Entry Keyboard="Numeric"
-                   Text="{Binding DadosBrowniano.NumeroDias}"/>
+            <controls:CustomEntry Value="{Binding DadosBrowniano.NumeroDias}"
+                                  TipoEntry="Inteiro"
+                                  AplicarValidacao="True"
+                                  x:Name="customEntryDias"/>
 
             <Label Text="Cor da simulação"/>
 
@@ -60,8 +69,7 @@
 
             <Button Text="Gerar nova simulação"
                     Clicked="OnGenerateClicked"
-                    Margin="20"
-                    IsEnabled="{Binding IsValid, Source={x:Reference customEntry}}"/>
+                    Margin="20"/>
         </VerticalStackLayout>
 
         

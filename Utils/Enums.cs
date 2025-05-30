@@ -6,5 +6,6 @@
         Texto,      // Padrão
         Numerico,   // Apenas números
         Moeda,      // Formatação R$ 9.999,99
+        Inteiro     // Apenas numeros
     }
 }
