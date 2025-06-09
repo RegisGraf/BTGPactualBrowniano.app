@@ -1,4 +1,5 @@
 ﻿using BTGPactualBrowniano.app.Models;
+using BTGPactualBrowniano.app.Utils;
 using BTGPactualBrowniano.app.ViewModels.Base;
 using BTGPactualBrowniano.app.Views.Custom;
 using System.Collections.ObjectModel;
@@ -57,6 +58,17 @@ namespace BTGPactualBrowniano.app.ViewModels
             {
                 listaEntries = value;
                 OnPropertyChanged("ListaEntries");
+            }
+        }
+
+        private List<TiposLinhas> listaTiposLinhas = Enum.GetValues<TiposLinhas>().ToList();
+        public List<TiposLinhas> ListaTiposLinhas
+        {
+            get { return listaTiposLinhas; }
+            set
+            {
+                listaTiposLinhas = value;
+                OnPropertyChanged("ListaTiposLinhas");
             }
         }
 

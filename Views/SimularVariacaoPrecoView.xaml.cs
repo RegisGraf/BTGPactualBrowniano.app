@@ -45,13 +45,14 @@ public partial class SimularVariacaoPrecoView : ContentPage
             Points = _viewModel.DadosBrowniano.Points,
             PrecoInicial = _viewModel.DadosBrowniano.PrecoInicial,
             RetornoMedio = _viewModel.DadosBrowniano.RetornoMedio,
-            Volatilidade = _viewModel.DadosBrowniano.Volatilidade
+            Volatilidade = _viewModel.DadosBrowniano.Volatilidade,
+            EstiloDaLinha = _viewModel.DadosBrowniano.EstiloDaLinha
         };
 
         _viewModel.ListaSeriesDadosBrowniano.Add(novaSerie);
         AlimentaListaCoresJaUsadas(novaSerie.CorDaLinhaHexa);
 
-        _drawable.CalcularBrownianoFinanceiro(novaSerie.NumeroDias, novaSerie.PrecoInicial, novaSerie.Volatilidade, novaSerie.RetornoMedio, novaSerie.CorDaLinhaHexa, novaSerie.Serie);
+        _drawable.CalcularBrownianoFinanceiro(novaSerie);
     }
 
     private async void OnGenerateClicked(object sender, EventArgs e)
@@ -77,12 +78,13 @@ public partial class SimularVariacaoPrecoView : ContentPage
             Points = _viewModel.DadosBrowniano.Points,
             PrecoInicial = _viewModel.DadosBrowniano.PrecoInicial,
             RetornoMedio = _viewModel.DadosBrowniano.RetornoMedio,
-            Volatilidade = _viewModel.DadosBrowniano.Volatilidade
+            Volatilidade = _viewModel.DadosBrowniano.Volatilidade,
+            EstiloDaLinha = _viewModel.DadosBrowniano.EstiloDaLinha
         };
 
         AlimentaListaCoresJaUsadas(novaSerie.CorDaLinhaHexa);
         _viewModel.ListaSeriesDadosBrowniano.Add(novaSerie);
-        _drawable.CalcularBrownianoFinanceiro(novaSerie.NumeroDias, novaSerie.PrecoInicial, novaSerie.Volatilidade, novaSerie.RetornoMedio, novaSerie.CorDaLinhaHexa, novaSerie.Serie);
+        _drawable.CalcularBrownianoFinanceiro(novaSerie);
 
         BrownianGraphicsView.Invalidate();
     }

@@ -2,6 +2,7 @@
 using BTGPactualBrowniano.app.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using UraniumUI;
 
 namespace BTGPactualBrowniano.app
 {
@@ -14,6 +15,8 @@ namespace BTGPactualBrowniano.app
                 .UseMauiApp<App>()
                 .RegisterViewModels()
                 .RegisterView()
+                .UseUraniumUI()
+                .UseUraniumUIMaterial()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -1,4 +1,5 @@
 ﻿using BTGPactualBrowniano.app.Models.Base;
+using BTGPactualBrowniano.app.Utils;
 using System.Collections.ObjectModel;
 
 namespace BTGPactualBrowniano.app.Models
@@ -104,6 +105,17 @@ namespace BTGPactualBrowniano.app.Models
             {
                 serie = value;
                 OnPropertyChanged("Serie");
+            }
+        }
+
+        private TiposLinhas estiloDaLinha = TiposLinhas.Continua;
+        public TiposLinhas EstiloDaLinha
+        {
+            get { return estiloDaLinha; }
+            set
+            {
+                estiloDaLinha = value;
+                OnPropertyChanged("EstiloDaLinha");
             }
         }
     }

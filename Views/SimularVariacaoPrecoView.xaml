@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BTGPactualBrowniano.app.Views.SimularVariacaoPrecoView"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:viewmodel="clr-namespace:BTGPactualBrowniano.app.ViewModels"
              xmlns:controls="clr-namespace:BTGPactualBrowniano.app.Views.Custom"
              Title="Simulação de preços">
@@ -67,6 +68,12 @@
                 <Label Text="▼"
                        VerticalOptions="Center"/>
             </HorizontalStackLayout>
+
+            <Label Text="Estilo da linha"/>
+
+            <Border>
+                <uranium:Dropdown ItemsSource="{Binding ListaTiposLinhas}" SelectedItem="{Binding DadosBrowniano.EstiloDaLinha, Mode=TwoWay}" Placeholder="Selecione"/>
+            </Border>
 
             <Button Text="Gerar nova simulação"
                     Clicked="OnGenerateClicked"

@@ -1,4 +1,5 @@
 ﻿using BTGPactualBrowniano.app.Models;
+using BTGPactualBrowniano.app.Utils;
 using System.Collections.ObjectModel;
 
 namespace BTGPactualBrowniano.app.Renderers
@@ -11,38 +12,28 @@ namespace BTGPactualBrowniano.app.Renderers
         private float _minPrice = float.MaxValue;
         private int _numDias;
         private float _margin = 50;
-        
-        //Calcula os pontos de variação de preço
-        public void CalcularBrownianoFinanceiro(int numeroDias, double precoInicial, double volatilidade, double retornoMedio, string corDaLinhaHexa, int serie)
-        {
-            var novaSerie = new DadosBrowniano()
-            {
-                Points = new ObservableCollection<PointF>(),
-                CorDaLinhaHexa = corDaLinhaHexa,
-                NumeroDias = numeroDias,
-                PrecoInicial = precoInicial,
-                RetornoMedio = retornoMedio,
-                Volatilidade = volatilidade,
-                Serie = serie
-            };
 
+        //Calcula os pontos de variação de preço
+        public void CalcularBrownianoFinanceiro(DadosBrowniano novaSerie)
+        {
+            novaSerie.Points = new ObservableCollection<PointF>();
             _maxPrice = float.MinValue;
             _minPrice = float.MaxValue;
-            
+
             double[] prices = new double[novaSerie.NumeroDias];
             prices[0] = novaSerie.PrecoInicial;
 
             // Converte % para decimal
-            novaSerie.Volatilidade /= 100;
-            novaSerie.RetornoMedio /= 100;
-
+            double volatilidade = novaSerie.Volatilidade / 100;
+            double retornoMedio = novaSerie.RetornoMedio / 100;
+         
             double preco = novaSerie.PrecoInicial;
             novaSerie.Points.Add(new PointF(0, (float)preco));
 
             for (int i = 1; i < novaSerie.NumeroDias; i++)
             {
                 double z = RandomExtensions.NextGaussian(new());
-                double retornoDiario = novaSerie.RetornoMedio + novaSerie.Volatilidade * z;
+                double retornoDiario = retornoMedio + volatilidade * z;
 
                 prices[i] = prices[i - 1] * Math.Exp(retornoDiario);
                 novaSerie.Points.Add(new PointF(i, (float)prices[i]));
@@ -158,6 +149,30 @@ namespace BTGPactualBrowniano.app.Renderers
             {
                 canvas.StrokeColor = Color.FromArgb(serie.CorDaLinhaHexa);
                 canvas.StrokeSize = 2;
+
+                switch (serie.EstiloDaLinha)
+                {
+                    case Utils.TiposLinhas.Continua:
+                        canvas.StrokeDashPattern = null;
+                        break;
+                    case Utils.TiposLinhas.Tracejada:
+                        canvas.StrokeDashPattern = new float[] { 5, 3 };
+                        break;
+                    case Utils.TiposLinhas.TracejadaLonga:
+                        canvas.StrokeDashPattern = new float[] { 10, 5 };
+                        break;
+                    case Utils.TiposLinhas.tracejadaCurta:
+                        canvas.StrokeDashPattern = new float[] { 2, 2 };
+                        break;
+                    case Utils.TiposLinhas.Mista:
+                        canvas.StrokeDashPattern = new float[] { 7, 3, 1, 3 };
+                        break;
+                    case Utils.TiposLinhas.Pontilhada:
+                        canvas.StrokeDashPattern = new float[] { 1, 3 };
+                        break;
+                    default:
+                        break;
+                }
 
                 var path = new PathF();
                 path.MoveTo(_margin, ScaleY(serie.Points[0].Y));
