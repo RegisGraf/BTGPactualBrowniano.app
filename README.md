@@ -40,7 +40,10 @@ Compile e execute para Windows:
 ▶️ Execute (Ctrl + F5)
 
 📸 Capturas de Tela
-![Screenshot_4](https://github.com/user-attachments/assets/1fda24f5-6b09-4adc-9cbe-e1b9c9d1a37e)
-![Screenshot_3](https://github.com/user-attachments/assets/3a6b751a-33d9-4c98-88cd-7e43f6887966)
-![Screenshot_2](https://github.com/user-attachments/assets/4e56dad6-e7a8-41c6-9134-57037097c585)
 ![Screenshot_1](https://github.com/user-attachments/assets/0a816d1a-7376-4dc0-851a-0d990261bce6)
+![Screenshot_2](https://github.com/user-attachments/assets/4e56dad6-e7a8-41c6-9134-57037097c585)
+![Screenshot_3](https://github.com/user-attachments/assets/3a6b751a-33d9-4c98-88cd-7e43f6887966)
+![Screenshot_4](https://github.com/user-attachments/assets/1fda24f5-6b09-4adc-9cbe-e1b9c9d1a37e)
+
+
+
