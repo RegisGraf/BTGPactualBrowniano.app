@@ -234,7 +234,7 @@ public partial class CustomEntry : ContentView
     {
         var entry = (Entry)sender;
 
-        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        if (string.IsNullOrWhiteSpace(CleanInput(e.NewTextValue)))
         {
             entry.Text = "R$ 0,00";
             return;
@@ -357,9 +357,7 @@ public partial class CustomEntry : ContentView
 
     private string CleanInput(string input)
     {
-        string pattern = CasasDecimais > 0
-            ? @"[^\d-]"
-            : @"[^\d-]";
+        string pattern = @"[^\d]";
         return Regex.Replace(input, pattern, "");
     }
     #endregion

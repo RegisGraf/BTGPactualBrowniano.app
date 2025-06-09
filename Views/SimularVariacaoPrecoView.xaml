@@ -91,9 +91,9 @@
                 <Grid ColumnDefinitions="*,*,*,*,*,*,*"
                       BackgroundColor="LightGray">
                     <Label Text="Série" Grid.Column="0"/>
-                    <Label Text="Preço inicial" Grid.Column="1"/>
-                    <Label Text="Volatilidade"  Grid.Column="2"/>
-                    <Label Text="Retorno médio" Grid.Column="3"/>
+                    <Label Text="Preço inicial(R$)" Grid.Column="1"/>
+                    <Label Text="Volatilidade(%)"  Grid.Column="2"/>
+                    <Label Text="Retorno médio(%)" Grid.Column="3"/>
                     <Label Text="Dias" Grid.Column="4"/>
                     <Label Text="Cor" Grid.Column="5" HorizontalTextAlignment="Center"/>
                     <Label Text="Ações" Grid.Column="6" HorizontalTextAlignment="Center"/>
@@ -108,7 +108,7 @@
                                 Grid.Column="0"
                                VerticalTextAlignment="Center"/>
 
-                        <Label Text="{Binding PrecoInicial}"
+                        <Label Text="{Binding PrecoInicial,StringFormat='{0:N2}'}"
                                 Grid.Column="1"
                                VerticalTextAlignment="Center"/>
 

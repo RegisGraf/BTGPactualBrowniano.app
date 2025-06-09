@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace BTGPactualBrowniano.app.Utils
 {
@@ -6,7 +7,8 @@ namespace BTGPactualBrowniano.app.Utils
     {
         public static string FormataMoedaReal(string texto)
         {
-            string text = texto.Replace("R$", "").Replace(".", "").Replace(",", "").Trim();
+            string pattern = @"[^\d]";
+            string text = Regex.Replace(texto, pattern, "");
 
             if (decimal.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal value))
             {
