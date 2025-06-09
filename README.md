@@ -20,11 +20,14 @@ App desenvolvido para a plataforma Windows.
 
 ## 📂 Estrutura do Projeto
 /Models          # Classes de dados (ex: Cores, DadosBrowniano)
+
 /Views           # Telas XAML (SimularVariacaoPrecoView, ColorPickerPopup, CustomEntry)
+
 /ViewModels      # Lógica das telas (SimularVariacaoPrecoViewModel, ColorPickerViewModel)
-/Renderers       # Classe que renderiza o gráfico
-/Utils           # Métodos auxiliares e enums
-README.md        # Este arquivo
+
+/Renderers       # Classe que renderiza o gráfico(BrownianDrawable)
+
+/Utils           # Métodos auxiliares e enums(Utils, Enums)
 
 🧪 Como rodar o app
 Clone o repositório:
