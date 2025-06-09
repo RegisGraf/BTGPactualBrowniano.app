@@ -116,7 +116,6 @@ namespace BTGPactualBrowniano.app.Renderers
             }
 
             // Linhas horizontais (preços)
-            //float priceStep = (_maxPrice - _minPrice) / 10;
             float priceStep = ((_maxPrice - _minPrice) / 10) > 0 ? ((_maxPrice - _minPrice) / 10) : 1;
             for (float price = _minPrice; price <= _maxPrice; price += priceStep)
             {

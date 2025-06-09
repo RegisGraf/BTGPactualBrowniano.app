@@ -6,7 +6,6 @@ using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Maui.Controls.Shapes;
-using System.Collections.ObjectModel;
 
 namespace BTGPactualBrowniano.app.Views;
 
@@ -22,8 +21,17 @@ public partial class SimularVariacaoPrecoView : ContentPage
         _viewModel = viewModel;
         BrownianGraphicsView.Drawable = _drawable;
         LoadDefaultSimulation();
+        AlimentaListaEntries();
 
         BindingContext = _viewModel;
+    }
+
+    private void AlimentaListaEntries()
+    {
+        _viewModel.ListaEntries.Add(customEntryDias);
+        _viewModel.ListaEntries.Add(customEntryPreco);
+        _viewModel.ListaEntries.Add(customEntryVolatilidade);
+        _viewModel.ListaEntries.Add(customEntryRetornoMedio);
     }
 
     private void LoadDefaultSimulation()
@@ -48,7 +56,13 @@ public partial class SimularVariacaoPrecoView : ContentPage
 
     private async void OnGenerateClicked(object sender, EventArgs e)
     {
-        if(_listaDeCoresJaUsadas.Contains(_viewModel.DadosBrowniano.CorDaLinhaHexa))
+        if (!CamposPreenchidosValidos())
+        {
+            await DisplayAlert("Atenção!", RetornaMensgemCamposInvalidos(), "Ok");
+            return;
+        }
+
+        if (_listaDeCoresJaUsadas.Contains(_viewModel.DadosBrowniano.CorDaLinhaHexa))
         {
             await DisplayAlert("Atenção!", "Esta cor já foi utilizada, por favor escolha outra cor!", "Ok");
             return;
@@ -107,10 +121,8 @@ public partial class SimularVariacaoPrecoView : ContentPage
     {
         try
         {
-            //_listaDeCoresJaUsadas = _viewModel.ListaSeriesDadosBrowniano.Select(c => c.CorDaLinhaHexa).ToList();
-
             var popup = new ColorPickerPopup(new ColorPickerViewModel(new Popup(), _listaDeCoresJaUsadas));
-            
+
             if (!WeakReferenceMessenger.Default.IsRegistered<ColorSelectedMessage>(this))
             {
                 WeakReferenceMessenger.Default.Register<ColorSelectedMessage>(this, (obj, m) =>
@@ -123,7 +135,7 @@ public partial class SimularVariacaoPrecoView : ContentPage
                         {
                             _viewModel.DadosBrowniano.CorDaLinha = corSelecionada.Cor;
                             _viewModel.DadosBrowniano.CorDaLinhaHexa = corSelecionada.CorHexa;
-                            
+
                         }
                     }
                     catch (Exception)
@@ -151,7 +163,7 @@ public partial class SimularVariacaoPrecoView : ContentPage
         {
             ImageButton buttonRemoverSerie = (ImageButton)sender;
 
-            if(buttonRemoverSerie is not null)
+            if (buttonRemoverSerie is not null)
             {
                 DadosBrowniano serie = (DadosBrowniano)buttonRemoverSerie.BindingContext;
 
@@ -160,7 +172,7 @@ public partial class SimularVariacaoPrecoView : ContentPage
                     RemoveCorJaUsadaDaLista(serie.CorDaLinhaHexa);
                     _viewModel.ListaSeriesDadosBrowniano.Remove(serie);
                     _drawable.RemoverSerie(serie);
-                    BrownianGraphicsView.Invalidate();   
+                    BrownianGraphicsView.Invalidate();
                 }
             }
         }
@@ -177,5 +189,29 @@ public partial class SimularVariacaoPrecoView : ContentPage
     private void RemoveCorJaUsadaDaLista(string corLiberada)
     {
         _listaDeCoresJaUsadas.Remove(corLiberada);
+    }
+
+    private bool CamposPreenchidosValidos()
+    {
+        return customEntryDias.IsValid && customEntryPreco.IsValid && customEntryRetornoMedio.IsValid && customEntryVolatilidade.IsValid;
+    }
+
+    private string RetornaMensgemCamposInvalidos()
+    {
+        string mensagem = "";
+
+        if (!customEntryDias.IsValid)
+            mensagem += "Campo número de dias inválido";
+
+        if (!customEntryPreco.IsValid)
+            mensagem += Environment.NewLine + "Campo preço inicial inválido";
+
+        if (!customEntryRetornoMedio.IsValid)
+            mensagem += Environment.NewLine + "Campo retorno medio inválido";
+
+        if (!customEntryVolatilidade.IsValid)
+            mensagem += Environment.NewLine + "Campo volatilidade inválido";
+
+        return mensagem;
     }
 }

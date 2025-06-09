@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 using BTGPactualBrowniano.app.Utils;
 
 namespace BTGPactualBrowniano.app.Views.Custom;
@@ -43,6 +44,8 @@ public partial class CustomEntry : ContentView
     public static readonly BindableProperty ExibeMensagemErroProperty =
         BindableProperty.Create(nameof(ExibeMensagemErro), typeof(bool), typeof(CustomEntry), false);
 
+    public static readonly BindableProperty TextChangedCommandProperty =
+    BindableProperty.Create(nameof(TextChangedCommand),typeof(ICommand),typeof(CustomEntry));
     #endregion
 
     #region Properties
@@ -117,6 +120,12 @@ public partial class CustomEntry : ContentView
         get => (int)GetValue(MinLengthProperty);
         set => SetValue(MinLengthProperty, value);
     }
+
+    public ICommand TextChangedCommand
+    {
+        get => (ICommand)GetValue(TextChangedCommandProperty);
+        set => SetValue(TextChangedCommandProperty, value);
+    }
     #endregion
 
     public CustomEntry()
@@ -176,6 +185,10 @@ public partial class CustomEntry : ContentView
         {
             if (AplicarValidacao)
                 ValidateInput();
+
+            // Dispara o Command, se definido e pode executar
+            if (TextChangedCommand?.CanExecute(e.NewTextValue) == true)
+                TextChangedCommand.Execute(e.NewTextValue);
         }
         catch (Exception ex)
         {
@@ -210,6 +223,10 @@ public partial class CustomEntry : ContentView
 
             if (AplicarValidacao)
                 ValidateInput();
+
+            // Dispara o Command, se definido e pode executar
+            if (TextChangedCommand?.CanExecute(e.NewTextValue) == true)
+                TextChangedCommand.Execute(e.NewTextValue);
         }
     }
 
@@ -233,6 +250,10 @@ public partial class CustomEntry : ContentView
 
         if (AplicarValidacao)
             ValidateInput();
+
+        // Dispara o Command, se definido e pode executar
+        if (TextChangedCommand?.CanExecute(e.NewTextValue) == true)
+            TextChangedCommand.Execute(e.NewTextValue);
     }
 
     private void FormatInteiro(object sender, TextChangedEventArgs e)
@@ -253,6 +274,10 @@ public partial class CustomEntry : ContentView
 
         if(AplicarValidacao)
             ValidateInput();
+
+        // Dispara o Command, se definido e pode executar
+        if (TextChangedCommand?.CanExecute(e.NewTextValue) == true)
+            TextChangedCommand.Execute(e.NewTextValue);
     }
 
     private void CursorToEnd(Entry entry, string formattedValue = "")

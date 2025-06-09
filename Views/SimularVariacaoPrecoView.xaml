@@ -26,32 +26,32 @@
                                   TipoEntry="Moeda"
                                   CasasDecimais="2"
                                   AplicarValidacao="True"
-                                  x:Name="customEntryPreco"/>
+                                  x:Name="customEntryPreco"
+                                  TextChangedCommand="{Binding ValidaEntriesCommand}"/>
 
             <Label Text="Volatilidade média(%)"/>
 
-            <!--<Entry Keyboard="Numeric"
-                   Text="{Binding DadosBrowniano.Volatilidade}"/>-->
             <controls:CustomEntry Value="{Binding DadosBrowniano.Volatilidade}"
                                   TipoEntry="Inteiro"
                                   AplicarValidacao="True"
-                                  x:Name="customEntryVolatilidade"/>
+                                  x:Name="customEntryVolatilidade"
+                                  TextChangedCommand="{Binding ValidaEntriesCommand}"/>
 
             <Label Text="Retorno médio(%)"/>
 
-            <!--<Entry Keyboard="Numeric"
-                   Text="{Binding DadosBrowniano.RetornoMedio}"/>-->
             <controls:CustomEntry Value="{Binding DadosBrowniano.RetornoMedio}"
                                   TipoEntry="Inteiro"
                                   AplicarValidacao="True"
-                                  x:Name="customEntryRetornoMedio"/>
+                                  x:Name="customEntryRetornoMedio"
+                                  TextChangedCommand="{Binding ValidaEntriesCommand}"/>
 
             <Label Text="Número de dias(dias)"/>
 
             <controls:CustomEntry Value="{Binding DadosBrowniano.NumeroDias}"
                                   TipoEntry="Inteiro"
                                   AplicarValidacao="True"
-                                  x:Name="customEntryDias"/>
+                                  x:Name="customEntryDias"
+                                  TextChangedCommand="{Binding ValidaEntriesCommand}"/>
 
             <Label Text="Cor da simulação"/>
 
@@ -59,6 +59,7 @@
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="AbrirListaDeCoresTapped" NumberOfTapsRequired="1"/>
                 </HorizontalStackLayout.GestureRecognizers>
+                
                 <Frame HeightRequest="50"
                        WidthRequest="50"
                        BackgroundColor="{Binding DadosBrowniano.CorDaLinha}"/>
@@ -69,7 +70,9 @@
 
             <Button Text="Gerar nova simulação"
                     Clicked="OnGenerateClicked"
-                    Margin="20"/>
+                    IsEnabled="{Binding IsFormValid}"
+                    Margin="20"
+                    x:Name="btnGerarSimulacao"/>
         </VerticalStackLayout>
 
         

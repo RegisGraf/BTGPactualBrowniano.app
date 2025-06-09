@@ -1,5 +1,6 @@
 ﻿using BTGPactualBrowniano.app.Models;
 using BTGPactualBrowniano.app.ViewModels.Base;
+using BTGPactualBrowniano.app.Views.Custom;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -48,11 +49,46 @@ namespace BTGPactualBrowniano.app.ViewModels
             }
         }
 
+        private ObservableCollection<CustomEntry> listaEntries;
+        public ObservableCollection<CustomEntry> ListaEntries
+        {
+            get { return listaEntries; }
+            set
+            {
+                listaEntries = value;
+                OnPropertyChanged("ListaEntries");
+            }
+        }
+
+        private bool isFormValid;
+        public bool IsFormValid
+        {
+            get => isFormValid;
+            set
+            {
+                if (isFormValid != value)
+                {
+                    isFormValid = value;
+                    OnPropertyChanged("IsFormValid");
+                }
+            }
+        }
+
+        public ICommand ValidaEntriesCommand { get; }
+
         public SimularVariacaoPrecoViewModel()
         {
             DadosBrowniano = new DadosBrowniano();
             ListaSeriesDadosBrowniano = new ObservableCollection<DadosBrowniano>();
+            ListaEntries = new ObservableCollection<CustomEntry>();
+
+            ValidaEntriesCommand = new Command(validaEntries);
+            ValidaEntriesCommand.Execute(null);
         }
 
+        public void validaEntries()
+        {
+            IsFormValid = ListaEntries.All(e => e.IsValid);
+        }
     }
 }
